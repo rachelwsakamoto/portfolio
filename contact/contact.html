@@ -1,23 +1,23 @@
 <title>Contact Folder</title>
 <h1>contact</h1>
 <nav>
-<a href="../index.html"> Home </a>
-<a href="contact.html"class="current" > Contact</a>
-<a href="../projects/projects.html">Project</a>
+    <a href="../index.html"> Home </a>
+    <a href="contact.html" class="current"> Contact</a>
+    <a href="../projects/projects.html">Projects</a>
 </nav>
 
 <form action="mailto:rwsakamoto@ucsd.com" method="post" enctype="text/plain">
     <label>
         Email:
-        <input name="email" type="email">
+        <input name="email" type="email" required>
     </label>
     <label>
         Subject:
-        <input name="subject">
+        <input name="subject" required>
     </label>
     <label>
         Message:
-        <textarea name="body"></textarea>
+        <textarea name="body" rows="5" required></textarea>
     </label>
-    <button>Submit</button>
+    <button>Send Message</button>
 </form>
