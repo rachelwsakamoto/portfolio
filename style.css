@@ -38,32 +38,34 @@ body {
     padding-bottom: 0.4em;
   }
 
-/* Inputs and textarea full-width */
+form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+}  
+
 form input,
 form textarea {
   display: block;
-    width: 100%;
-    box-sizing: border-box;
-    font: inherit;
-    padding: 0.5em;
-    margin-bottom: 1em;
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0.4em;
+  margin-bottom: 1em;
 }
 
-/* Label spacing */
 form label {
-    display: block;
-    margin-block: 0.5em 0.25em;
-    font-weight: bold;
+  display: contents;
+  grid-template-columns: subgrid;
+  align-items:center;
 }
 
 /* Submit button styling */
 form button {
-    display: block;
-    padding: 0.5em 1em;
-    font: inherit;
-    cursor: pointer;
-    background-color: var(--color-accent);
-    color: white;
-    border: none;
-    border-radius: 0.25em;
+  display: block;
+  padding: 0.4em 1em;
+  font: inherit;
+  background-color: var(--color-accent);
+  color: oklch(80% 3% 200);
+  border-radius: 0.3em;
 }
