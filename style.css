@@ -56,7 +56,7 @@ form textarea {
 
 form label {
   display: contents;
-  /*grid-template-columns: subgrid;*/
+  grid-template-columns: subgrid;
   align-items:center;
 }
 
@@ -66,6 +66,6 @@ form button {
   padding: 0.4em 1em;
   font: inherit;
   background-color: var(--color-accent);
-  color: oklch(80% 3% 200);
+  color: oklch(63.598% 0.10602 204.674);
   border-radius: 0.3em;
 }
