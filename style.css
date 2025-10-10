@@ -69,3 +69,7 @@ form button {
   color: oklch(89.531% 0.02687 205.631);
   border-radius: 0.3em;
 }
+.projects{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em,1fr));
+}
