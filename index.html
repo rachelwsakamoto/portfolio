@@ -17,18 +17,33 @@
     </nav>
     
     <style>
-    body {
-      max-width: 100ch;
-      padding: 1rem;
-    }
-    nav {display: flex;
-    padding: 10ch;
-    }
-    nav a{
-        flex:1
-    }
+  body {
+    max-width: 100ch;
+    margin: 0 auto;     /* centers the content */
+    padding: 1rem;
+    font-family: sans-serif;
+  }
 
-  </style>
+  nav {
+    display: flex;       /* enable flexbox */
+    padding: 1rem;       /* use rem instead of ch for consistent spacing */
+    background-color: #f3f3f3; /* optional: gives nav a light background */
+    gap: 0.5rem;         /* small space between links */
+  }
+
+  nav a {
+    flex: 1;             /* each link takes equal space */
+    text-align: center;  /* centers the text inside each flex item */
+    text-decoration: none;
+    color: black;
+    padding: 0.5rem;
+  }
+
+  nav a.current {
+    font-weight: bold;
+    background-color: #ddd; /* highlight current page */
+  }
+</style>
     
 
 </head>
