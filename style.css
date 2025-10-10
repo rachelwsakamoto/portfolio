@@ -37,17 +37,11 @@ body {
     border-bottom: 0.5em solid var(--color-accent);
     padding-bottom: 0.4em;
   }
-/* Styles applied to all forms on the site */
-form label,
-form input,
-form textarea,
-form button {
-    display: block;
-}
 
 /* Inputs and textarea full-width */
 form input,
 form textarea {
+  display: block;
     width: 100%;
     box-sizing: border-box;
     font: inherit;
@@ -57,12 +51,14 @@ form textarea {
 
 /* Label spacing */
 form label {
+    display: block;
     margin-block: 0.5em 0.25em;
     font-weight: bold;
 }
 
 /* Submit button styling */
 form button {
+    display: block;
     padding: 0.5em 1em;
     font: inherit;
     cursor: pointer;
