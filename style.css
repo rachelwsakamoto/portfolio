@@ -56,13 +56,13 @@ form textarea {
 
 form label {
   display: contents;
-  grid-template-columns: subgrid;
+  /*grid-template-columns: subgrid;*/
   align-items:center;
 }
 
 /* Submit button styling */
 form button {
-  display: block;
+  grid-column: 1 / -1;
   padding: 0.4em 1em;
   font: inherit;
   background-color: var(--color-accent);
