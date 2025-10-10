@@ -37,18 +37,37 @@ body {
     border-bottom: 0.5em solid var(--color-accent);
     padding-bottom: 0.4em;
   }
-  input, textarea,button{
-    font:inherit
-  }
-  form input, form textarea{
-    width:100%;
-    display:block;
-    box-sizing: border-box;
-  }
-  form label{
-    margin-block: 0.4em 0.4em;
+/* Styles applied to all forms on the site */
+form label,
+form input,
+form textarea,
+form button {
     display: block;
-  }
-  form button{
-    display:block;
-  }
+}
+
+/* Inputs and textarea full-width */
+form input,
+form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    font: inherit;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+/* Label spacing */
+form label {
+    margin-block: 0.5em 0.25em;
+    font-weight: bold;
+}
+
+/* Submit button styling */
+form button {
+    padding: 0.5em 1em;
+    font: inherit;
+    cursor: pointer;
+    background-color: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 0.25em;
+}
