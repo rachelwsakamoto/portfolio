@@ -60,7 +60,6 @@ form label {
   align-items:center;
 }
 
-/* Submit button styling */
 form button {
   grid-column: 1 / -1;
   padding: 0.4em 1em;
