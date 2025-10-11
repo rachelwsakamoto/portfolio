@@ -97,6 +97,7 @@ h2{
 
 .resume{
   display: grid;
+  grid-template-columns: auto 1fr;
   margin: 0;
   gap: 1em;
 }
@@ -109,9 +110,9 @@ section{
   background-color: antiquewhite;
 }
 .resume h2{
-  font-size: 200%;
+  font-size: 150%;
   color:antiquewhite;
 }
-.ressume h3{
+.resume h3{
   font-size: 100%;
 }
