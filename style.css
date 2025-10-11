@@ -94,3 +94,24 @@ h1{
 h2{
   font-size: 250%;
 }
+
+.resume{
+  display: grid;
+  margin: 0;
+  gap: 1em;
+}
+section{
+  margin-bottom: 1.5em;
+}
+
+article{
+  padding:1em;
+  background-color: antiquewhite;
+}
+h2{
+  font-size: 250%;
+  color:antiquewhite;
+}
+h3{
+  font-size: 150%;
+}
