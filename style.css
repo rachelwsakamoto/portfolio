@@ -104,14 +104,14 @@ section{
   margin-bottom: 1.5em;
 }
 
-article{
+.resume article{
   padding:1em;
   background-color: antiquewhite;
 }
-h2{
+.resume h2{
   font-size: 200%;
   color:antiquewhite;
 }
-h3{
-  font-size: 1300%;
+.ressume h3{
+  font-size: 100%;
 }
