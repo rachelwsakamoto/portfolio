@@ -1,5 +1,5 @@
 :root {
-    --color-accent: oklch(76.075% 0.09611 263.764); /* or adjust values for a color you like */
+    --color-accent: oklch(76.075% 0.09611 263.764); 
 }
 
 body {
@@ -83,4 +83,14 @@ form button {
 
 .projects h2{
   margin:0;
+}
+h1,h2,h3,h4,h5,h6{
+  line-height: 1.1;
+  text-wrap:balance;
+}
+h1{
+  font-size: 400%
+}
+h2{
+  font-size: 250%;
 }
