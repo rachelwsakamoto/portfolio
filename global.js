@@ -24,7 +24,7 @@ let pages = [
 ];
 
 let nav = document.createElement('nav');
-document.body.prepend(nav);
+document.body.append(nav);
 
 for (let p of pages) {
   let url = p.url;
