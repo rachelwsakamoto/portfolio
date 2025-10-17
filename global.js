@@ -4,9 +4,9 @@ const BASE_PATH = (location.hostname === "localhost" || location.hostname === "1
 
 let pages = [
   { url: '', title: 'Home' },
-  { url: 'projects/', title: 'Projects' },
-  { url: 'contact/', title: 'Contact' },
-  { url: 'resume/', title: 'Resume' },
+  { url: 'projects/projects.html', title: 'Projects' },
+  { url: 'contact/contact.html', title: 'Contact' },
+  { url: 'resume/resume.html', title: 'Resume' },
   // add the rest of your pages here
 ];
 
