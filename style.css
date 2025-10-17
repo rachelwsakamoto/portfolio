@@ -124,3 +124,13 @@ nav {
   border-bottom: 2px solid var(--border-color);
 }
 
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+  font-family: inherit;
+}
+input, textarea, button, select {
+  font-family: inherit;
+}
