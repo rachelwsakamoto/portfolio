@@ -114,3 +114,7 @@ section{
 .resume h3{
   font-size: 100%;
 }
+
+:root{
+  color-scheme: light dark;
+}
