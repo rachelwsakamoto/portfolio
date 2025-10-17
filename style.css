@@ -121,5 +121,5 @@ section{
 
 nav{
   --border-color: oklch(50% 10% 200 / 40%);
-  border-bottom-color: var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
