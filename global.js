@@ -1,6 +1,19 @@
 const BASE_PATH = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
-  ? "/"                  // Local server
-  : "/portfolio/";         // GitHub Pages repo name
+  ? "/"             
+  : "/portfolio/"; 
+  
+document.body.insertAdjacentHTML(
+  'afterbegin',
+  `
+	<label class="color-scheme">
+		Theme:
+		<select>
+			<option value = "light dark"> Automatic</option>
+         <option value="light">Light</option>
+        <option value="dark">Dark</option>
+		</select>
+	</label>`,
+);
 
 let pages = [
   { url: '', title: 'Home' },
@@ -30,16 +43,5 @@ for (let p of pages) {
   nav.append(a);
 
 }
-document.body.insertAdjacentHTML(
-  'afterbegin',
-  `
-	<label class="color-scheme">
-		Theme:
-		<select>
-			<option value = "light dark"> Automatic</option>
-         <option value="light">Light</option>
-        <option value="dark">Dark</option>
-		</select>
-	</label>`,
-);
+
 
