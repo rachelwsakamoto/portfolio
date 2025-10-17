@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     nav.append(a);
 
     }
-    const select = document.querySelector('.color-scheme select');
+    const select = document.querySelector('#theme-select');
     if ("colorScheme" in localStorage) {
         const savedScheme = localStorage.colorScheme;
         document.documentElement.style.setProperty('color-scheme', savedScheme);
