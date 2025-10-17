@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'current',
     a.host === location.host && a.pathname === location.pathname,
         );
-    nav.append(a);
+    nav.prepend(a);
 
     }
     const select = document.querySelector('.color-scheme select');
