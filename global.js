@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     let nav = document.createElement('nav');
-    document.body.append(nav);
+    document.body.prepend(nav);
 
     for (let p of pages) {
     let url = p.url;
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     nav.append(a);
 
     }
-    const select = document.querySelector('#theme-select');
+    const select = document.querySelector('.color-scheme select');
     if ("colorScheme" in localStorage) {
         const savedScheme = localStorage.colorScheme;
         document.documentElement.style.setProperty('color-scheme', savedScheme);
