@@ -94,5 +94,5 @@ export function renderProjects(project, containerElement) {
 }
 
 export async function fetchGitHubData(username) {
-	return fetchJSON(`https://api.github.com/users/rachelwsakamoto`);
+	return fetchJSON(`https://api.github.com/users/${username}`);
 }
