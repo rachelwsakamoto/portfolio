@@ -162,4 +162,5 @@ input, textarea, button, select {
   max-width: 20em;
   margin-block: 2em;
   overflow: visible;
+  background-color: white;
 }
