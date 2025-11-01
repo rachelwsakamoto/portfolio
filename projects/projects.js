@@ -8,6 +8,20 @@ renderProjects(projects, projectsContainer, 'h2');
 const projectsTitle = document.querySelector('.projects-title');
 projectsTitle.textContent = `${projects.length} Projects`;
 
+let query = '';
+let searchInput = document.querySelector('.searchBar');
+searchInput.addEventListener('change', (event) => {
+  // update query value
+  query = event.target.value;
+  // filter projects
+  let filteredProjects = projects.filter((project) => {
+    let values = Object.values(project).join('\n').toLowerCase();
+    return values.includes(query.toLowerCase());
+  });
+  // render filtered projects
+  renderProjects(filteredProjects, projectsContainer, 'h2');
+});
+
 let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
 
 let rolledData = d3.rollups(
