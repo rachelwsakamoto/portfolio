@@ -5,6 +5,7 @@ const projects = await fetchJSON('../lib/projects.json');
 const projectsContainer = document.querySelector('.projects');
 const searchInput = document.querySelector('.searchBar');
 
+// Step 4.1: Add search query variable
 let query = '';
 
 function setQuery(newQuery) {
@@ -15,33 +16,43 @@ function setQuery(newQuery) {
   return filteredProjects;
 }
 
+// Refactor all plotting into one function
 function renderPieChart(projectsGiven) {
-  let rolledData = d3.rollups(
+  // Clear SVG and legend
+  d3.select('svg').selectAll('*').remove();
+  d3.select('.legend').selectAll('*').remove();
+
+  // Re-calculate rolled data
+  let newRolledData = d3.rollups(
     projectsGiven,
     (v) => v.length,
     (d) => d.year,
   );
 
-  let data = rolledData.map(([year, count]) => {
+  // Re-calculate data
+  let newData = newRolledData.map(([year, count]) => {
     return { value: count, label: year };
   });
 
-  let sliceGenerator = d3.pie().value((d) => d.value);
-  let arcData = sliceGenerator(data);
-  let arcs = arcData.map((d) => arcGenerator(d));
+  // Re-calculate slice generator, arc data, arcs, etc.
+  let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
+  let newSliceGenerator = d3.pie().value((d) => d.value);
+  let newArcData = newSliceGenerator(newData);
+  let newArcs = newArcData.map((d) => arcGenerator(d));
 
-  d3.select('svg').selectAll('*').remove();
-  d3.select('.legend').selectAll('*').remove();
+  let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-  arcs.forEach((arc, idx) => {
+  // Update paths
+  newArcs.forEach((arc, idx) => {
     d3.select('svg')
       .append('path')
       .attr('d', arc)
       .attr('fill', colors(idx))
   });
 
+  // Update legend
   let legend = d3.select('.legend');
-  data.forEach((d, idx) => {
+  newData.forEach((d, idx) => {
     legend
       .append('li')
       .attr('style', `--color:${colors(idx)}`)
@@ -49,13 +60,13 @@ function renderPieChart(projectsGiven) {
   });
 }
 
-let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
-let colors = d3.scaleOrdinal(d3.schemeTableau10);
-
+// Call this function on page load
+renderProjects(projects, projectsContainer, 'h2');
 renderPieChart(projects);
 
-searchInput.addEventListener('change', (event) => {
+searchInput.addEventListener('input', (event) => {
   let filteredProjects = setQuery(event.target.value);
+  // Re-render legends and pie chart when event triggers
   renderProjects(filteredProjects, projectsContainer, 'h2');
   renderPieChart(filteredProjects);
 });
