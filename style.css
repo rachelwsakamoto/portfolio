@@ -161,8 +161,15 @@ input, textarea, button, select {
 #projects-plot {
   max-width: 20em;
   margin-block: 2em;
-
   overflow: visible;
+  background-color: white; /* Add this line - makes the colors visible */
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
 }
 
 .legend {
@@ -173,19 +180,6 @@ input, textarea, button, select {
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-  margin: 1rem 0;
-}
-
-.legend li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.swatch {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  background-color: var(--color);
-  border-radius: 0.2em;
+  margin: 0; /* Change from 1rem 0 to 0 for container layout */
+  flex: 1; /* Add this for side-by-side layout */
 }
