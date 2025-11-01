@@ -32,7 +32,7 @@ for (let d of data) {
 let arcs = arcData.map((d) => arcGenerator(d));
 
 let colors = ['gold', 'purple'];
-
+d3.select('svg').selectAll('*').remove();
 arcs.forEach((arc, idx) => {
     d3.select('svg')
       .append('path')
