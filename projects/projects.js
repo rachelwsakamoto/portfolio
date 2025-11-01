@@ -10,12 +10,16 @@ projectsTitle.textContent = `${projects.length} Projects`;
 
 let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
 
+
+
 let data = [1, 2];
+
 
 let total = 0;
 for (let d of data) {
   total += d;
 }
+
 
 let angle = 0;
 let arcData = [];
@@ -33,5 +37,5 @@ arcs.forEach((arc, idx) => {
     d3.select('svg')
       .append('path')
       .attr('d', arc)
-      .attr('fill', colors[idx]) // This is the completed part they're asking for
+      .attr('fill', colors[idx])
 })
