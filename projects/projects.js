@@ -91,7 +91,6 @@ function renderPieChart(projectsGiven) {
 renderProjects(projects, projectsContainer, 'h2');
 renderPieChart(projects);
 
-// Search functionality
 searchInput.addEventListener('input', (event) => {
   let filteredProjects = setQuery(event.target.value);
   renderProjects(filteredProjects, projectsContainer, 'h2');
