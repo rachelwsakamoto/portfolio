@@ -193,3 +193,16 @@ input, textarea, button, select {
 path {
   transition: 300ms;
 }
+
+.selected {
+  --color: oklch(60% 45% 0) !important;
+
+  &:is(path) {
+    fill: var(--color);
+  }
+}
+
+.swatch {
+  display: inline-block;
+  width: 1em;
+  height: 1em;}
