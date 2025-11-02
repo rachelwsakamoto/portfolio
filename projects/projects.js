@@ -50,6 +50,19 @@ function renderPieChart(projectsGiven) {
       .on('click', () => {
         selectedIndex = selectedIndex === i ? -1 : i;
 
+        // Apply selection highlighting
+        svg
+          .selectAll('path')
+          .attr('class', (_, idx) => (
+            idx === selectedIndex ? 'selected' : ''
+          ));
+        
+        d3.select('.legend')
+          .selectAll('li')
+          .attr('class', (_, idx) => (
+            idx === selectedIndex ? 'selected' : ''
+          ));
+
         // Filter projects based on selection
         if (selectedIndex === -1) {
           renderProjects(projectsGiven, projectsContainer, 'h2');
@@ -72,6 +85,19 @@ function renderPieChart(projectsGiven) {
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
       .on('click', () => {
         selectedIndex = selectedIndex === idx ? -1 : idx;
+
+        // Apply selection highlighting
+        svg
+          .selectAll('path')
+          .attr('class', (_, i) => (
+            i === selectedIndex ? 'selected' : ''
+          ));
+        
+        legend
+          .selectAll('li')
+          .attr('class', (_, i) => (
+            i === selectedIndex ? 'selected' : ''
+          ));
 
         // Filter projects based on selection
         if (selectedIndex === -1) {
