@@ -99,7 +99,6 @@ function renderPieChart(projectsGiven) {
           let selectedYear = data[selectedIndex].label;
           let filteredProjects = projectsGiven.filter(project => project.year === selectedYear);
           renderProjects(filteredProjects, projectsContainer, 'h2');
-          renderPieChart(filteredProjects); }
       });
   });
 }
