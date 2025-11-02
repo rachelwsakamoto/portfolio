@@ -206,6 +206,5 @@ path {
   display: inline-block;
   width: 1em;
   height: 1em;
-  aspect-ratio: 1 / 1;
-  background-color: var(--color);}
+  aspect-ratio: 1 / 1;}
 
