@@ -18,7 +18,6 @@ function setQuery(newQuery) {
 }
 
 function renderPieChart(projectsGiven) {
-
   d3.select('svg').selectAll('*').remove();
   d3.select('.legend').selectAll('*').remove();
 
@@ -58,14 +57,13 @@ function renderPieChart(projectsGiven) {
             idx === selectedIndex ? 'selected' : ''
           ));
 
+        // Only filter the project list, NOT the pie chart
         if (selectedIndex === -1) {
           renderProjects(projectsGiven, projectsContainer, 'h2');
-          renderPieChart(projectsGiven); 
         } else {
           let selectedYear = data[selectedIndex].label;
           let filteredProjects = projectsGiven.filter(project => project.year === selectedYear);
           renderProjects(filteredProjects, projectsContainer, 'h2');
-          renderPieChart(filteredProjects);
         }
       });
   });
@@ -91,14 +89,14 @@ function renderPieChart(projectsGiven) {
             i === selectedIndex ? 'selected' : ''
           ));
 
-        // Filter projects based on selection
+        // Only filter the project list, NOT the pie chart
         if (selectedIndex === -1) {
           renderProjects(projectsGiven, projectsContainer, 'h2');
-          renderPieChart(projectsGiven); // Show full pie chart again
         } else {
           let selectedYear = data[selectedIndex].label;
           let filteredProjects = projectsGiven.filter(project => project.year === selectedYear);
           renderProjects(filteredProjects, projectsContainer, 'h2');
+        }
       });
   });
 }
