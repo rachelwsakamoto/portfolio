@@ -194,7 +194,8 @@ input, textarea, button, select {
   width: 1em;
   height: 1em;
   aspect-ratio: 1 / 1;
-  background-color: var(--color);}
+  background-color: var(--color);
+  border-radius: 0.2em; }
 
 path {
   transition: 300ms;
