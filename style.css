@@ -183,3 +183,13 @@ input, textarea, button, select {
   margin: 0; /* Change from 1rem 0 to 0 for container layout */
   flex: 1; /* Add this for side-by-side layout */
 }
+
+#projects-plot:has(path:hover) {
+  path:not(:hover) {
+    opacity: 0.5;
+  }
+}
+
+path {
+  transition: 300ms;
+}
