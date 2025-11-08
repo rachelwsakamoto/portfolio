@@ -15,7 +15,7 @@ if (profileStats) {
 			<dt>Followers</dt><dd>${githubData.followers}</dd>
 			<dt>Following</dt><dd>${githubData.following}</dd>
 			<dt>Public Repos</dt><dd>${githubData.public_repos}</dd>
-			<dt>Public Gists</dt><dd>${githubData.public_gists}</dd>
+			<dt>Public Gits</dt><dd>${githubData.public_gists}</dd>
 		</dl>
 	`;
 }
