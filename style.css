@@ -13,10 +13,9 @@ body {
     /*background-color: #C1C1E0;*/
     gap: 0.75em;
     margin-bottom: 1.0em;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: oklch(80% 3% 200);
-  }
+    --border-color: oklch(50% 10% 200 / 40%);
+    border-bottom: 2px solid var(--border-color);
+}
 
   nav a {
     flex: 1;
