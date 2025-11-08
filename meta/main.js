@@ -58,7 +58,7 @@ function renderCommitInfo(data, commits) {
 
     const files = [...new Set(data.map(d => d.file))];
     const lineLengths = data.map(d => d.length);
-    
+
     // number of files
     dl.append('dt').text('Files');
     dl.append('dd').text(files.length);
@@ -96,7 +96,9 @@ function renderScatterPlot(data, commits) {
         .domain([0, 24])
         .range([usableArea.bottom, usableArea.top]);
     const xAxis = d3.axisBottom(xScale);
-    const yAxis = d3.axisLeft(yScale);
+    const yAxis = d3
+        .axisLeft(yScale)
+        .tickFormat((d) => String(d % 24).padStart(2, '0') + ':00');
 
     svg
         .append('g')
