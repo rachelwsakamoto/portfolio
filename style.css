@@ -203,5 +203,14 @@ path {
   }
 }
 
+.gridlines line {
+    stroke: #e0e0e0;
+    stroke-width: 1;
+}
+
+.gridlines path {
+    stroke: none;
+}
+
 
 
