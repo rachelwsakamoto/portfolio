@@ -212,5 +212,28 @@ path {
     stroke: none;
 }
 
+dl.info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 1rem;
+    margin: 0;
+}
+
+dl.info dt {
+    grid-column: 1;
+    color: #666;
+    margin: 0;
+}
+
+dl.info dd {
+    grid-column: 2;
+    margin: 0;
+}
+
+.tooltip {
+    position: fixed;
+    top: 1em;
+    left: 1em;
+}
 
 
