@@ -1,16 +1,22 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
 async function loadData() {
-  const data = await d3.csv('loc.csv', (row) => ({
-    ...row,
-    line: Number(row.line),
-    depth: Number(row.depth),
-    length: Number(row.length),
-    date: new Date(row.date + 'T00:00' + row.timezone),
-    datetime: new Date(row.datetime),
-  }));
+  try {
+    const data = await d3.csv('loc.csv', (row) => ({
+      ...row,
+      line: Number(row.line),
+      depth: Number(row.depth),
+      length: Number(row.length),
+      date: new Date(row.date + 'T00:00' + row.timezone),
+      datetime: new Date(row.datetime),
+    }));
 
-  return data;
+    console.log('CSV loaded successfully, rows:', data.length);
+    return data;
+  } catch (error) {
+    console.error('Error loading CSV:', error);
+    return [];
+  }
 }
 
 function processCommits(data) {
@@ -148,6 +154,8 @@ function renderTooltipContent(commit) {
     dateStyle: 'full',
   });
 }
+
+
 
 
 
