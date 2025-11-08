@@ -100,6 +100,13 @@ function renderScatterPlot(data, commits) {
         .axisLeft(yScale)
         .tickFormat((d) => String(d % 24).padStart(2, '0') + ':00');
 
+    const gridlines = svg
+        .append('g')
+        .attr('class', 'gridlines')
+        .attr('transform', `translate(${usableArea.left}, 0)`);
+
+    gridlines.call(d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width))
+
     svg
         .append('g')
         .attr('transform', `translate(0, ${usableArea.bottom})`)
