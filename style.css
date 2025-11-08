@@ -118,11 +118,6 @@ section{
   color-scheme: light dark;
 }
 
-nav {
-  --border-color: oklch(50% 10% 200 / 40%);
-  border-bottom: 2px solid var(--border-color);
-}
-
 .color-scheme {
   position: absolute;
   top: 1rem;
