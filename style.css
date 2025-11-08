@@ -236,4 +236,13 @@ dl.info dd {
     left: 1em;
 }
 
+circle {
+  transition: 200ms;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+circle:hover {
+  transform: scale(1.5);
+}
 
