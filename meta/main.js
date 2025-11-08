@@ -92,9 +92,10 @@ function renderScatterPlot(data, commits) {
 }
 
 
-renderScatterPlot(data, commits);
+
 let data = await loadData();
 let commits = processCommits(data);
+console.log(commits);
 renderCommitInfo(data, commits);
-
+renderScatterPlot(data, commits);
 
