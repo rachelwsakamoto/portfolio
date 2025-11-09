@@ -80,6 +80,15 @@ function renderCommitInfo(data, commits) {
 
 let xScale, yScale;
 
+function brushed(event) {
+        const selection = event.selection;
+        d3.selectAll('circle').classed('selected', (d) =>
+            isCommitSelected(selection, d),
+        );
+        renderSelectionCount(selection);
+        renderLanguageBreakdown(selection);
+    }
+
 function isCommitSelected(selection, commit) {
         if (!selection) {
             return false;
@@ -172,17 +181,6 @@ function renderScatterPlot(data, commits) {
             updateTooltipVisibility(false);
         });
 
-    function brushed(event) {
-        const selection = event.selection;
-        d3.selectAll('circle').classed('selected', (d) =>
-            isCommitSelected(selection, d),
-        );
-        renderSelectionCount(selection);
-        renderLanguageBreakdown(selection);
-    }
-
-
-    // Create brush
     svg.call(d3.brush().on('start brush end', brushed));
 
     // Raise dots and everything after overlay
