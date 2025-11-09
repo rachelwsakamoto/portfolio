@@ -71,6 +71,8 @@ function renderCommitInfo(data, commits) {
     dl.append('dd').text(Math.round(d3.mean(lineLengths)) + 'ch');}
 
 
+let xScale, yScale;
+
 function renderScatterPlot(data, commits) {
     const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
     
@@ -92,15 +94,18 @@ function renderScatterPlot(data, commits) {
         .attr('viewBox', `0 0 ${width} ${height}`)
         .style('overflow', 'visible');
     
-    const xScale = d3
+    // Update to use global variables
+    xScale = d3
         .scaleTime()
         .domain(d3.extent(commits, (d) => d.datetime))
         .range([usableArea.left, usableArea.right])
         .nice();
 
-    const yScale = d3.scaleLinear()
+    yScale = d3.scaleLinear()
         .domain([0, 24])
         .range([usableArea.bottom, usableArea.top]);
+    
+    // ... rest of your code
     
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3
@@ -158,16 +163,15 @@ function renderScatterPlot(data, commits) {
     }
 
     function isCommitSelected(selection, commit) {
-        if (!selection) {
-            return false;
-        }
-        
-        const [[x0, y0], [x1, y1]] = selection;
-        const commitX = xScale(commit.datetime);
-        const commitY = yScale(commit.hourFrac);
-        
-        return commitX >= x0 && commitX <= x1 && commitY >= y0 && commitY <= y1;
+    if (!selection) {
+        return false;
     }
+    const [x0, x1] = selection.map((d) => d[0]);
+    const [y0, y1] = selection.map((d) => d[1]);
+    const x = xScale(commit.datetime);
+    const y = yScale(commit.hourFrac);
+    return x >= x0 && x <= x1 && y >= y0 && y <= y1;
+}
 
 // Create brush
     svg.call(d3.brush().on('start brush end', brushed));
