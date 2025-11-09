@@ -160,6 +160,7 @@ function renderScatterPlot(data, commits) {
         d3.selectAll('circle').classed('selected', (d) =>
             isCommitSelected(selection, d),
         );
+        renderSelectionCount(selection);
     }
 
     function isCommitSelected(selection, commit) {
@@ -191,6 +192,19 @@ function renderTooltipContent(commit) {
   date.textContent = commit.datetime?.toLocaleString('en', {
     dateStyle: 'full',
   });
+}
+
+function renderSelectionCount(selection) {
+  const selectedCommits = selection
+    ? commits.filter((d) => isCommitSelected(selection, d))
+    : [];
+
+  const countElement = document.querySelector('#selection-count');
+  countElement.textContent = `${
+    selectedCommits.length || 'No'
+  } commits selected`;
+
+  return selectedCommits;
 }
 
 
