@@ -59,26 +59,27 @@ function renderCommitInfo(data, commits) {
     dl.append('dt').text('Total commits');
     dl.append('dd').text(commits.length);
 
-    // FIX: Define fileLengths first
-    const fileLengths = d3.rollups(data,
-        v => d3.max(v, d => d.line),
-        d => d.file);
+    // Number of files
+    const files = [...new Set(data.map(d => d.file))];
+    dl.append('dt').text('Files');
+    dl.append('dd').text(files.length);
+
+    // Avg line length
+    const lineLengths = data.map(d => d.length);
+    const avgLineLength = d3.mean(lineLengths);
+    dl.append('dt').text('Avg line length');
+    dl.append('dd').text(Math.round(avgLineLength) + 'ch');
+
+    // Simple file stats that work
+    const fileCounts = d3.rollups(data, v => v.length, d => d.file);
+    const maxFile = d3.max(fileCounts, d => d[1]);
+    const avgFile = d3.mean(fileCounts, d => d[1]);
     
-    let numFiles = fileLengths.length;
-    dl.append('dt').text('Number of files');
-    dl.append('dd').text(numFiles);
-
-    const longestFile = d3.greatest(fileLengths, d => d[1]);
-    dl.append('dt').text('Longest file');
-    dl.append('dd').html(`${longestFile[0]} (${longestFile[1]} lines)`);
-
-    let avgLineLength = d3.mean(data, d => d.length);
-    dl.append('dt').text('Average line length');
-    dl.append('dd').text(avgLineLength.toFixed(2) + ' characters');
-
-    const avgFileLength = d3.mean(fileLengths, d => d[1]);
-    dl.append('dt').text('Average file length');
-    dl.append('dd').text(avgFileLength.toFixed(2) + ' lines');
+    dl.append('dt').text('Largest file');
+    dl.append('dd').text(maxFile + ' lines');
+    
+    dl.append('dt').text('Avg file size');
+    dl.append('dd').text(Math.round(avgFile) + ' lines');
 }
 
 let xScale, yScale;
