@@ -48,7 +48,6 @@ function processCommits(data) {
     });
 }
 
-
 function renderCommitInfo(data, commits) {
     const dl = d3.select('#stats').append('dl').attr('class', 'stats');
 
@@ -60,11 +59,15 @@ function renderCommitInfo(data, commits) {
     dl.append('dt').text('Total commits');
     dl.append('dd').text(commits.length);
 
-    let numFiles = d3.group(data, d => d.file).size;
+    // FIX: Define fileLengths first
+    const fileLengths = d3.rollups(data,
+        v => d3.max(v, d => d.line),
+        d => d.file);
+    
+    let numFiles = fileLengths.length;
     dl.append('dt').text('Number of files');
     dl.append('dd').text(numFiles);
 
-    
     const longestFile = d3.greatest(fileLengths, d => d[1]);
     dl.append('dt').text('Longest file');
     dl.append('dd').html(`${longestFile[0]} (${longestFile[1]} lines)`);
@@ -72,13 +75,11 @@ function renderCommitInfo(data, commits) {
     let avgLineLength = d3.mean(data, d => d.length);
     dl.append('dt').text('Average line length');
     dl.append('dd').text(avgLineLength.toFixed(2) + ' characters');
-    const fileLengths = d3.rollups(data,
-        v => d3.max(v, d => d.line),
-        d => d.file);
+
     const avgFileLength = d3.mean(fileLengths, d => d[1]);
     dl.append('dt').text('Average file length');
-    dl.append('dd').text(avgFileLength.toFixed(2) + ' lines');}
-
+    dl.append('dd').text(avgFileLength.toFixed(2) + ' lines');
+}
 
 let xScale, yScale;
 
@@ -113,8 +114,6 @@ function renderScatterPlot(data, commits) {
     yScale = d3.scaleLinear()
         .domain([0, 24])
         .range([usableArea.bottom, usableArea.top]);
-    
-    // ... rest of your code
     
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3
@@ -164,6 +163,7 @@ function renderScatterPlot(data, commits) {
             d3.select(event.currentTarget).style('fill-opacity', 0.7);
             updateTooltipVisibility(false);
         });
+
     function brushed(event) {
         const selection = event.selection;
         d3.selectAll('circle').classed('selected', (d) =>
@@ -174,34 +174,45 @@ function renderScatterPlot(data, commits) {
     }
 
     function isCommitSelected(selection, commit) {
-    if (!selection) {
-        return false;
+        if (!selection) {
+            return false;
+        }
+        const [x0, x1] = selection.map((d) => d[0]);
+        const [y0, y1] = selection.map((d) => d[1]);
+        const x = xScale(commit.datetime);
+        const y = yScale(commit.hourFrac);
+        return x >= x0 && x <= x1 && y >= y0 && y <= y1;
     }
-    const [x0, x1] = selection.map((d) => d[0]);
-    const [y0, y1] = selection.map((d) => d[1]);
-    const x = xScale(commit.datetime);
-    const y = yScale(commit.hourFrac);
-    return x >= x0 && x <= x1 && y >= y0 && y <= y1;
-}
 
-// Create brush
+    // Create brush
     svg.call(d3.brush().on('start brush end', brushed));
 
-// Raise dots and everything after overlay
+    // Raise dots and everything after overlay
     svg.selectAll('.dots, .overlay ~ *').raise();
 }
 
 function renderTooltipContent(commit) {
   const link = document.getElementById('commit-link');
   const date = document.getElementById('commit-date');
+  const time = document.getElementById('commit-time');
+  const author = document.getElementById('commit-author');
+  const lines = document.getElementById('commit-lines');
 
   if (Object.keys(commit).length === 0) return;
 
   link.href = commit.url;
-  link.textContent = commit.id;
+  link.textContent = commit.id.slice(0, 8);
   date.textContent = commit.datetime?.toLocaleString('en', {
     dateStyle: 'full',
   });
+  time.textContent = commit.time;
+  author.textContent = commit.author;
+  lines.textContent = commit.totalLines.toLocaleString();
+}
+
+function updateTooltipVisibility(isVisible) {
+  const tooltip = document.getElementById('commit-tooltip');
+  tooltip.hidden = !isVisible;
 }
 
 function renderSelectionCount(selection) {
@@ -249,13 +260,8 @@ function renderLanguageBreakdown(selection) {
   }
 }
 
-
-
-
-
 let data = await loadData();
 let commits = processCommits(data);
-console.log(commits);
+console.log('Commits:', commits);
 renderCommitInfo(data, commits);
 renderScatterPlot(data, commits);
-
