@@ -51,26 +51,21 @@ function processCommits(data) {
 function renderCommitInfo(data, commits) {
     const dl = d3.select('#stats').append('dl').attr('class', 'stats');
 
-    // Add total LOC
     dl.append('dt').html('Total <abbr title="Lines of code">LOC</abbr>');
     dl.append('dd').text(data.length);
 
-    // Add total commits
     dl.append('dt').text('Total commits');
     dl.append('dd').text(commits.length);
 
-    // Number of files
     const files = [...new Set(data.map(d => d.file))];
     dl.append('dt').text('Files');
     dl.append('dd').text(files.length);
 
-    // Avg line length
     const lineLengths = data.map(d => d.length);
     const avgLineLength = d3.mean(lineLengths);
     dl.append('dt').text('Avg line length');
     dl.append('dd').text(Math.round(avgLineLength) + 'ch');
 
-    // Simple file stats that work
     const fileCounts = d3.rollups(data, v => v.length, d => d.file);
     const maxFile = d3.max(fileCounts, d => d[1]);
     const avgFile = d3.mean(fileCounts, d => d[1]);
@@ -82,7 +77,19 @@ function renderCommitInfo(data, commits) {
     dl.append('dd').text(Math.round(avgFile) + ' lines');
 }
 
+
 let xScale, yScale;
+
+function isCommitSelected(selection, commit) {
+        if (!selection) {
+            return false;
+        }
+        const [x0, x1] = selection.map((d) => d[0]);
+        const [y0, y1] = selection.map((d) => d[1]);
+        const x = xScale(commit.datetime);
+        const y = yScale(commit.hourFrac);
+        return x >= x0 && x <= x1 && y >= y0 && y <= y1;
+    }
 
 function renderScatterPlot(data, commits) {
     const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
@@ -174,16 +181,6 @@ function renderScatterPlot(data, commits) {
         renderLanguageBreakdown(selection);
     }
 
-    function isCommitSelected(selection, commit) {
-        if (!selection) {
-            return false;
-        }
-        const [x0, x1] = selection.map((d) => d[0]);
-        const [y0, y1] = selection.map((d) => d[1]);
-        const x = xScale(commit.datetime);
-        const y = yScale(commit.hourFrac);
-        return x >= x0 && x <= x1 && y >= y0 && y <= y1;
-    }
 
     // Create brush
     svg.call(d3.brush().on('start brush end', brushed));
