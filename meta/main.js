@@ -121,7 +121,6 @@ function renderScatterPlot(data, commits) {
         .attr('viewBox', `0 0 ${width} ${height}`)
         .style('overflow', 'visible');
     
-    // Update to use global variables
     xScale = d3
         .scaleTime()
         .domain(d3.extent(commits, (d) => d.datetime))
@@ -183,7 +182,6 @@ function renderScatterPlot(data, commits) {
 
     svg.call(d3.brush().on('start brush end', brushed));
 
-    // Raise dots and everything after overlay
     svg.selectAll('.dots, .overlay ~ *').raise();
 }
 
