@@ -150,6 +150,30 @@ function renderScatterPlot(data, commits) {
             d3.select(event.currentTarget).style('fill-opacity', 0.7);
             updateTooltipVisibility(false);
         });
+    function brushed(event) {
+        const selection = event.selection;
+        d3.selectAll('circle').classed('selected', (d) =>
+            isCommitSelected(selection, d),
+        );
+    }
+
+    function isCommitSelected(selection, commit) {
+        if (!selection) {
+            return false;
+        }
+        
+        const [[x0, y0], [x1, y1]] = selection;
+        const commitX = xScale(commit.datetime);
+        const commitY = yScale(commit.hourFrac);
+        
+        return commitX >= x0 && commitX <= x1 && commitY >= y0 && commitY <= y1;
+    }
+
+// Create brush
+    svg.call(d3.brush().on('start brush end', brushed));
+
+// Raise dots and everything after overlay
+    svg.selectAll('.dots, .overlay ~ *').raise();
 }
 
 function renderTooltipContent(commit) {
