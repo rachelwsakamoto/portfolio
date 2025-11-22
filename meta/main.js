@@ -1,6 +1,6 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
-// Global variables
+
 let data, commits;
 let commitProgress = 100;
 let timeScale; 
@@ -314,7 +314,6 @@ function updateFileDisplay(filteredCommits) {
     })
     .sort((a, b) => b.lines.length - a.lines.length);
 
-  // ADD THIS CODE:
   let filesContainer = d3
     .select('#files')
     .selectAll('div')
@@ -374,6 +373,7 @@ function onTimeSliderChange() {
     
     updateCommitVisibility();
     filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
+    updateFileDisplay(filteredCommits);
 }
 
 function updateCommitVisibility() {
@@ -392,8 +392,8 @@ async function init() {
     renderCommitInfo(data, commits);
     renderScatterPlot(data, commits);
 
+    // ADD THIS LINE:
+    updateFileDisplay(filteredCommits);
+
     document.getElementById('commit-progress').addEventListener('input', onTimeSliderChange);
 }
-
-// Start the application
-init();
