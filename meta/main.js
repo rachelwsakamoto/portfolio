@@ -221,14 +221,12 @@ function updateFileDisplay(filteredCommits) {
         })
     );
 
-  // This code updates the div info
   filesContainer
     .select("dt")
     .html(
       (d) => `<code>${d.name}</code><small>${d.lines.length} lines</small>`
     );
 
-  // Append one div for each line
   filesContainer
     .select("dd")
     .selectAll("div")
