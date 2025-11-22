@@ -10,7 +10,6 @@ body {
   nav {
     display:flex;      
     padding:1.5rem;
-    /*background-color: #C1C1E0;*/
     gap: 0.75em;
     margin-bottom: 1.0em;
     --border-color: oklch(50% 10% 200 / 40%);

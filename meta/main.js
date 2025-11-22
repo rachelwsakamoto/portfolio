@@ -7,7 +7,7 @@ let yScale;
 async function loadData() {
   const data = await d3.csv("loc.csv", (row) => ({
     ...row,
-    line: Number(row.line), // or just +row.line
+    line: Number(row.line), 
     depth: Number(row.depth),
     length: Number(row.length),
     date: new Date(row.date + "T00:00" + row.timezone),
@@ -37,7 +37,7 @@ function processCommits(data) {
 
       Object.defineProperty(ret, "lines", {
         value: lines,
-        enumerable: false, // Makes it hidden when printing/logging
+        enumerable: false, 
         configurable: true,
         writable: false,
       });
@@ -76,17 +76,14 @@ function renderScatterPlot(data, commits) {
     height: height - margin.top - margin.bottom,
   };
 
-  // Update scales with new ranges
+  
   xScale.range([usableArea.left, usableArea.right]);
   yScale.range([usableArea.bottom, usableArea.top]);
 
-  // Sort commits by total lines in descending order
   const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
 
-  // Calculate range of edited lines
   const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
 
-  // Create radius scale (using square root for proportional area)
   const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2, 30]);
 
   dots
@@ -109,41 +106,34 @@ function renderScatterPlot(data, commits) {
       updateTooltipVisibility(false);
     });
 
-  // Create the axes
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3
     .axisLeft(yScale)
     .tickFormat((d) => String(d % 24).padStart(2, "0") + ":00");
 
-  // Add X axis
   svg
     .append("g")
     .attr("class", "x-axis")
     .attr("transform", `translate(0, ${usableArea.bottom})`)
     .call(xAxis);
 
-  // Add Y axis
   svg
     .append("g")
     .attr("class", "y-axis")
     .attr("transform", `translate(${usableArea.left}, 0)`)
     .call(yAxis);
 
-  // Add gridlines BEFORE the axes
   const gridlines = svg
     .append("g")
     .attr("class", "gridlines")
     .attr("transform", `translate(${usableArea.left}, 0)`);
 
-  // Create gridlines as an axis with no labels and full-width ticks
   gridlines.call(
     d3.axisLeft(yScale).tickFormat("").tickSize(-usableArea.width)
   );
 
-  // Create brush
   svg.call(d3.brush().on("start brush end", brushed));
 
-  // Raise dots and everything after overlay
   svg.selectAll(".dots, .overlay ~ *").raise();
 }
 
@@ -169,7 +159,6 @@ function updateScatterPlot(data, commits) {
 
   const xAxis = d3.axisBottom(xScale);
 
-  // Remove the old x-axis and create a new one
   const xAxisGroup = svg.select("g.x-axis");
   xAxisGroup.selectAll("*").remove();
   xAxisGroup.call(xAxis);
@@ -212,7 +201,6 @@ function updateFileDisplay(filteredCommits) {
     .selectAll("div")
     .data(files, (d) => d.name)
     .join(
-      // This code only runs when the div is initially rendered
       (enter) =>
         enter.append("div").call((div) => {
           div.append("dt").append("code");
@@ -241,7 +229,6 @@ let commits = processCommits(data);
 
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-// Will get updated as user scrolls
 let filteredCommits = commits;
 
 renderScatterPlot(data, commits);
@@ -314,14 +301,12 @@ function renderLanguageBreakdown(selection) {
   const requiredCommits = selectedCommits.length ? selectedCommits : commits;
   const lines = requiredCommits.flatMap((d) => d.lines);
 
-  // Use d3.rollup to count lines per language
+
   const breakdown = d3.rollup(
     lines,
     (v) => v.length,
     (d) => d.type
   );
-
-  // Update DOM with breakdown
   container.innerHTML = "";
 
   for (const [language, count] of breakdown) {
