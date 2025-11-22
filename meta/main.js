@@ -8,6 +8,9 @@ let commitMaxTime;
 let xScale, yScale;
 let filteredCommits;
 
+
+
+
 async function loadData() {
   try {
     const data = await d3.csv('loc.csv', (row) => ({
@@ -300,6 +303,32 @@ function renderSelectionCount(selection) {
   } commits selected`;
 
   return selectedCommits;
+}
+
+function updateFileDisplay(filteredCommits) {
+  let lines = filteredCommits.flatMap((d) => d.lines);
+  let files = d3
+    .groups(lines, (d) => d.file)
+    .map(([name, lines]) => {
+      return { name, lines };
+    })
+    .sort((a, b) => b.lines.length - a.lines.length);
+
+  // ADD THIS CODE:
+  let filesContainer = d3
+    .select('#files')
+    .selectAll('div')
+    .data(files, (d) => d.name)
+    .join(
+      (enter) =>
+        enter.append('div').call((div) => {
+          div.append('dt').append('code');
+          div.append('dd');
+        }),
+    );
+
+  filesContainer.select('dt > code').text((d) => d.name);
+  filesContainer.select('dd').text((d) => `${d.lines.length} lines`);
 }
 
 function renderLanguageBreakdown(selection) {
