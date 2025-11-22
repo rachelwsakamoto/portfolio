@@ -308,7 +308,7 @@ circle.selected {
   display: flex;
   width: 0.5em;
   aspect-ratio: 1;
-  background: var(--color);
+  background: steelblue;
   border-radius: 50%;
 }
 
