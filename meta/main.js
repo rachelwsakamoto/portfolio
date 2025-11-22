@@ -345,7 +345,6 @@ function onTimeSliderChange() {
     filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
 }
 
-// Add this function to handle commit filtering
 function updateCommitVisibility() {
     const circles = d3.selectAll('.dots circle');
     
@@ -359,3 +358,5 @@ let commits = processCommits(data);
 console.log('Commits:', commits);
 renderCommitInfo(data, commits);
 renderScatterPlot(data, commits);
+
+document.getElementById('commit-progress').addEventListener('input', onTimeSliderChange);
