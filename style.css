@@ -268,4 +268,27 @@ circle.selected {
   fill: #ff6b6b;
 }
 
+.filter-control {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 20px;
+}
+
+.filter-control label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+#commit-progress {
+    flex: 1;
+    max-width: 300px;
+}
+
+.filter-control time {
+    margin-left: auto;
+    font-weight: bold;
+    min-width: 200px;
+}
 

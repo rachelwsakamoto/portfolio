@@ -1,5 +1,8 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
+
+let commitProgress = 100;
+
 async function loadData() {
   try {
     const data = await d3.csv('loc.csv', (row) => ({
@@ -131,6 +134,18 @@ function renderScatterPlot(data, commits) {
         .domain([0, 24])
         .range([usableArea.bottom, usableArea.top]);
     
+    timeScale = d3
+        .scaleTime()
+        .domain([
+            d3.min(commits, (d) => d.datetime),
+            d3.max(commits, (d) => d.datetime),
+        ])
+        .range([0, 100]);
+    
+    commitMaxTime = timeScale.invert(commitProgress);
+    
+    onTimeSliderChange();
+    
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3
         .axisLeft(yScale)
@@ -179,10 +194,14 @@ function renderScatterPlot(data, commits) {
             d3.select(event.currentTarget).style('fill-opacity', 0.7);
             updateTooltipVisibility(false);
         });
+        
+    updateCommitVisibility();
 
     svg.call(d3.brush().on('start brush end', brushed));
 
     svg.selectAll('.dots, .overlay ~ *').raise();
+        
+    
 }
 
 function renderTooltipContent(commit) {
@@ -258,6 +277,30 @@ function renderLanguageBreakdown(selection) {
             <dd>${count} lines (${formatted})</dd>
         `;
   }
+}
+
+function onTimeSliderChange() {
+    const slider = document.getElementById('commit-progress');
+    const timeDisplay = document.getElementById('commit-time');
+    
+    // Update global variables
+    commitProgress = Number(slider.value);
+    commitMaxTime = timeScale.invert(commitProgress);
+    
+    // Update the time display
+    timeDisplay.textContent = commitMaxTime.toLocaleString();
+    
+    // Update commit visibility (you'll need to implement this)
+    updateCommitVisibility();
+}
+
+// Add this function to handle commit filtering
+function updateCommitVisibility() {
+    const circles = d3.selectAll('.dots circle');
+    
+    circles.style('opacity', (d) => {
+        return d.datetime <= commitMaxTime ? 1 : 0.3;
+    });
 }
 
 let data = await loadData();
