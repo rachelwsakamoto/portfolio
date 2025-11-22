@@ -397,3 +397,4 @@ async function init() {
 
     document.getElementById('commit-progress').addEventListener('input', onTimeSliderChange);
 }
+init();
