@@ -159,14 +159,16 @@ function renderScatterPlot(data, commits) {
     gridlines.call(d3.axisLeft(yScale).tickFormat('').tickSize(-usableArea.width));
 
     svg
-        .append('g')
-        .attr('transform', `translate(0, ${usableArea.bottom})`)
-        .call(xAxis);
+      .append('g')
+      .attr('transform', `translate(0, ${usableArea.bottom})`)
+      .attr('class', 'x-axis') // new line to mark the g tag
+      .call(xAxis);
 
-    svg
-        .append('g')
-        .attr('transform', `translate(${usableArea.left}, 0)`)
-        .call(yAxis);
+  svg
+    .append('g')
+    .attr('transform', `translate(${usableArea.left}, 0)`)
+    .attr('class', 'y-axis') // just for consistency
+    .call(yAxis);
     
     const dots = svg.append('g').attr('class', 'dots');
     
@@ -226,8 +228,8 @@ function updateScatterPlot(data, commits) {
   const xAxis = d3.axisBottom(xScale);
 
   // Remove the old x-axis and create a new one
-  const xAxisGroup = svg.select("g.x-axis");
-  xAxisGroup.selectAll("*").remove();
+  const xAxisGroup = svg.select('g.x-axis');
+  xAxisGroup.selectAll('*').remove();
   xAxisGroup.call(xAxis);
 
   const dots = svg.select("g.dots");
