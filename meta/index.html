@@ -15,8 +15,15 @@
             <label>
                 Show commits until:
                 <input type="range" id="commit-progress" min="0" max="100" value="100">
-                <time id="slider-time"></time>  <!-- CHANGED ID -->
+                <time id="slider-time"></time> 
             </label>
+        </div>
+
+        <div id="files-container">
+            <h3>Files</h3>
+            <dl id="files">
+                <!-- Files will be dynamically inserted here -->
+            </dl>
         </div>
 
         <div id="stats"></div>
@@ -45,3 +52,4 @@
     </main>
 </body>
 </html>
+
