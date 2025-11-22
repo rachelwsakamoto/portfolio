@@ -233,7 +233,7 @@ function updateFileDisplay(filteredCommits) {
     .data((d) => d.lines)
     .join("div")
     .attr("class", "loc")
-    .attr("style", (d) => `--color: ${colors(d.type)}`);
+    .style("background-color", (d) => colors(d.type));
 }
 
 let data = await loadData();
