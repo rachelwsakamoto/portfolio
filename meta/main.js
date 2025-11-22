@@ -194,16 +194,65 @@ function renderScatterPlot(data, commits) {
             d3.select(event.currentTarget).style('fill-opacity', 0.7);
             updateTooltipVisibility(false);
         });
-        
+
     updateCommitVisibility();
 
     svg.call(d3.brush().on('start brush end', brushed));
 
     svg.selectAll('.dots, .overlay ~ *').raise();
         
-    
 }
 
+function updateScatterPlot(data, commits) {
+  const width = 1000;
+  const height = 600;
+  const margin = { top: 10, right: 10, bottom: 30, left: 20 };
+  const usableArea = {
+    top: margin.top,
+    right: width - margin.right,
+    bottom: height - margin.bottom,
+    left: margin.left,
+    width: width - margin.left - margin.right,
+    height: height - margin.top - margin.bottom,
+  };
+
+  const svg = d3.select("#chart").select("svg");
+
+  xScale = xScale.domain(d3.extent(commits, (d) => d.datetime));
+
+  const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
+  const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2, 30]);
+
+  const xAxis = d3.axisBottom(xScale);
+
+  // Remove the old x-axis and create a new one
+  const xAxisGroup = svg.select("g.x-axis");
+  xAxisGroup.selectAll("*").remove();
+  xAxisGroup.call(xAxis);
+
+  const dots = svg.select("g.dots");
+  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
+
+  dots
+    .selectAll("circle")
+    .data(sortedCommits, (d) => d.id)
+    .join("circle")
+    .attr("cx", (d) => xScale(d.datetime))
+    .attr("cy", (d) => yScale(d.hourFrac))
+    .attr("r", (d) => rScale(d.totalLines))
+    .attr("fill", "steelblue")
+    .style("fill-opacity", 0.7)
+    .on("mouseenter", (event, commit) => {
+      d3.select(event.currentTarget).style("fill-opacity", 1);
+      renderTooltipContent(commit);
+      updateTooltipVisibility(true);
+      updateTooltipPosition(event);
+    })
+    .on("mouseleave", (event) => {
+      d3.select(event.currentTarget).style("fill-opacity", 0.7);
+      updateTooltipVisibility(false);
+    });
+}
 function renderTooltipContent(commit) {
   const link = document.getElementById('commit-link');
   const date = document.getElementById('commit-date');
@@ -279,19 +328,19 @@ function renderLanguageBreakdown(selection) {
   }
 }
 
+let filteredCommits = commits;
+
 function onTimeSliderChange() {
     const slider = document.getElementById('commit-progress');
     const timeDisplay = document.getElementById('commit-time');
     
-    // Update global variables
     commitProgress = Number(slider.value);
     commitMaxTime = timeScale.invert(commitProgress);
     
-    // Update the time display
     timeDisplay.textContent = commitMaxTime.toLocaleString();
     
-    // Update commit visibility (you'll need to implement this)
     updateCommitVisibility();
+    filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
 }
 
 // Add this function to handle commit filtering
