@@ -334,7 +334,7 @@ let filteredCommits = commits;
 
 function onTimeSliderChange() {
     const slider = document.getElementById('commit-progress');
-    const timeDisplay = document.getElementById('commit-time');
+    const timeDisplay = document.getElementById('slider-time');  // CHANGED ID
     
     commitProgress = Number(slider.value);
     commitMaxTime = timeScale.invert(commitProgress);
