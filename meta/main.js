@@ -2,6 +2,8 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
 
 let commitProgress = 100;
+let timeScale; 
+let commitMaxTime;  
 
 async function loadData() {
   try {
@@ -164,11 +166,11 @@ function renderScatterPlot(data, commits) {
       .attr('class', 'x-axis') // new line to mark the g tag
       .call(xAxis);
 
-  svg
-    .append('g')
-    .attr('transform', `translate(${usableArea.left}, 0)`)
-    .attr('class', 'y-axis') // just for consistency
-    .call(yAxis);
+    svg
+      .append('g')
+      .attr('transform', `translate(${usableArea.left}, 0)`)
+      .attr('class', 'y-axis') // just for consistency
+      .call(yAxis);
     
     const dots = svg.append('g').attr('class', 'dots');
     
@@ -179,23 +181,26 @@ function renderScatterPlot(data, commits) {
         .range([2, 30]);
 
     dots
-        .selectAll('circle')
-        .data(sortedCommits)
-        .join('circle')
-        .attr('cx', (d) => xScale(d.datetime))
-        .attr('cy', (d) => yScale(d.hourFrac))
-        .attr('r', (d) => rScale(d.totalLines))
-        .attr('fill', 'steelblue')
-        .style('fill-opacity', 0.7)
-        .on('mouseenter', (event, commit) => {
-            d3.select(event.currentTarget).style('fill-opacity', 1);
-            renderTooltipContent(commit);
-            updateTooltipVisibility(true);
-        })
-        .on('mouseleave', (event) => {
-            d3.select(event.currentTarget).style('fill-opacity', 0.7);
-            updateTooltipVisibility(false);
-        });
+      .selectAll('circle')
+      .data(sortedCommits)
+      .join('circle')
+      .attr('cx', (d) => xScale(d.datetime))
+      .attr('cy', (d) => yScale(d.hourFrac))
+      .attr('r', (d) => rScale(d.totalLines))
+      .attr('fill', 'steelblue')
+      .style('fill-opacity', 0.7)
+      .on('mouseenter', (event, commit) => {
+          d3.select(event.currentTarget).style('fill-opacity', 1);
+          renderTooltipContent(commit);
+          updateTooltipVisibility(true);
+      })
+      .on('mousemove', (event) => {  // ADD THIS
+          updateTooltipPosition(event);
+      })
+      .on('mouseleave', (event) => {
+          d3.select(event.currentTarget).style('fill-opacity', 0.7);
+          updateTooltipVisibility(false);
+      });
 
     updateCommitVisibility();
 
@@ -352,11 +357,19 @@ function updateCommitVisibility() {
         return d.datetime <= commitMaxTime ? 1 : 0.3;
     });
 }
+function createBrushSelector(svg) {
+    svg.call(d3.brush().on('start brush end', brushed));
+}
 
-let data = await loadData();
-let commits = processCommits(data);
-console.log('Commits:', commits);
-renderCommitInfo(data, commits);
-renderScatterPlot(data, commits);
+async function init() {
+    data = await loadData();
+    commits = processCommits(data);
+    console.log('Commits:', commits);
+    renderCommitInfo(data, commits);
+    renderScatterPlot(data, commits);
 
-document.getElementById('commit-progress').addEventListener('input', onTimeSliderChange);
+    document.getElementById('commit-progress').addEventListener('input', onTimeSliderChange);
+}
+
+init();
+
